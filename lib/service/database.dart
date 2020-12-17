@@ -7,8 +7,13 @@ class DataBase {
     initialFirebase();
   }
   initialFirebase() async {
+    // try {
     await Firebase.initializeApp();
     _fireStore = FirebaseFirestore.instance;
+    // } catch (e) {
+    //   print(e);
+    //   //show Screen
+    // }
   }
 
   createChatRooms({Map messageMap}) {
@@ -24,5 +29,15 @@ class DataBase {
     yield* _fireStore.collection("messages").orderBy('time').snapshots();
   }
 
-  getCurrentSender() {}
+  addUserInfo({userInfoMap}) {
+    _fireStore.collection("users").add(userInfoMap);
+  }
+
+  getUserByEmail({String email}) {
+    return _fireStore
+        .collection("users")
+        .where("email", isEqualTo: email)
+        // ignore: deprecated_member_use
+        .getDocuments();
+  }
 }

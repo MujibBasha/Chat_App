@@ -7,8 +7,13 @@ class Authentication {
     initFirebase();
   }
   initFirebase() async {
+    // try {
     await Firebase.initializeApp();
     _auth = FirebaseAuth.instance;
+    // } catch (e) {
+    //   print(e);
+    //   //show Screen
+    // }
   }
 
   Future signUpNewUser({String email, String password}) async {

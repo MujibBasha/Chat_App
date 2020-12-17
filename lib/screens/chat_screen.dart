@@ -78,7 +78,17 @@ class _ChatScreenState extends State<ChatScreen> {
                 }
               }),
         ],
-        title: Text('⚡️Chat'),
+        //⚡️Chat
+        title: Row(
+          children: [
+            Image.asset(
+              "images/logo.png",
+              height: 50,
+              width: 50,
+            ),
+            Text('️Chat'),
+          ],
+        ),
         backgroundColor: Colors.lightBlueAccent,
       ),
       body: SafeArea(
@@ -104,19 +114,21 @@ class _ChatScreenState extends State<ChatScreen> {
                   ),
                   FlatButton(
                     onPressed: () async {
-                      //Implement send functionality.
-                      print(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
-                      print(
-                          ">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> ${loggedInUser.email},$messageText");
-                      Map<String, dynamic> messageMap = {
-                        "text": messageText,
-                        "sender": loggedInUser.email == null
-                            ? "No One"
-                            : loggedInUser.email,
-                        "time": DateTime.now().millisecondsSinceEpoch,
-                      };
-                      sendMessageController.clear();
-                      await dataBase.createChatRooms(messageMap: messageMap);
+                      if (sendMessageController.text.isNotEmpty) {
+                        //Implement send functionality.
+                        print(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
+                        print(
+                            ">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> ${loggedInUser.email},${sendMessageController.text}");
+                        Map<String, dynamic> messageMap = {
+                          "text": sendMessageController.text,
+                          "sender": loggedInUser.email == null
+                              ? "No One"
+                              : loggedInUser.email,
+                          "time": DateTime.now().millisecondsSinceEpoch,
+                        };
+                        sendMessageController.clear();
+                        await dataBase.createChatRooms(messageMap: messageMap);
+                      }
                     },
                     child: Text(
                       'Send',
@@ -172,7 +184,7 @@ class MessageBubble extends StatelessWidget {
             child: Padding(
               padding: EdgeInsets.symmetric(vertical: 10, horizontal: 20),
               child: Text(
-                text,
+                text ?? "",
                 style: TextStyle(
                   fontSize: 15,
                   color: isMe ? Colors.white : Colors.black54,
