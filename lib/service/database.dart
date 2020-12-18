@@ -33,7 +33,7 @@ class DataBase {
     _fireStore.collection("users").add(userInfoMap);
   }
 
-  getUserByEmail({String email}) {
+  Future getUserByEmail({String email}) {
     return _fireStore
         .collection("users")
         .where("email", isEqualTo: email)

@@ -6,7 +6,7 @@ import 'package:intro_views_flutter/intro_views_flutter.dart';
 List<PageViewModel> introPages = [
   PageViewModel(
     //ONE GROUP CHAT
-    pageColor: const Color(0xff3e66c5),
+    pageColor: const Color(0xc7007aff),
     iconImageAssetPath: null,
     iconColor: Colors.white,
     bubbleBackgroundColor: Colors.black26,

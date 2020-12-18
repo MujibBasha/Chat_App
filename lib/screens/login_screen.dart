@@ -1,3 +1,4 @@
+import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:flash_chat/components/rounded_button.dart';
 import 'package:flash_chat/constants.dart';
 import 'package:flash_chat/screens/chat_screen.dart';
@@ -23,6 +24,10 @@ class _LoginScreenState extends State<LoginScreen> {
 
   isUser({String email}) async {
     userInfo = await dataBase.getUserByEmail(email: email);
+  }
+
+  getUser({String email}) async {
+    await isUser(email: email);
   }
 
   @override
@@ -73,7 +78,27 @@ class _LoginScreenState extends State<LoginScreen> {
                         tag: "logo",
                         child: Container(
                           height: 200.0,
-                          child: Image.asset('images/logo.png'),
+                          child: Stack(
+                            alignment: Alignment.center,
+                            children: [
+                              Image.asset(
+                                'images/logo.png',
+                              ),
+                              Container(
+                                padding: EdgeInsets.only(bottom: 15),
+                                child: TypewriterAnimatedTextKit(
+                                  text: ["welcome back"],
+                                  textStyle: TextStyle(
+                                    fontSize: 22.5,
+                                    color: Colors.white,
+                                    fontWeight: FontWeight.w900,
+                                  ),
+                                  speed: const Duration(milliseconds: 300),
+                                  textAlign: TextAlign.center,
+                                ),
+                              ),
+                            ],
+                          ),
                         ),
                       ),
                     ),
@@ -93,13 +118,15 @@ class _LoginScreenState extends State<LoginScreen> {
                               if (newValue.isEmpty) {
                                 return "Please Provide a valid Email";
                               }
-                              isUser(email: newValue);
+                              //ToDO
+                              // getUser(email: newValue);
+                              //isUser(email: newValue);
                               return RegExp(
                                           r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$')
                                       .hasMatch(newValue)
-                                  ? userInfo != null
-                                      ? null
-                                      : "That email address doesn't exist"
+                                  ? null //userInfo != null
+                                  // ? null
+                                  //: "That email address doesn't exist"
                                   : "Please provide a valid Email";
                               //check if the current email is equal to any email inside of database
                             },

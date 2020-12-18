@@ -1,3 +1,4 @@
+import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flash_chat/components/rounded_button.dart';
 import 'package:flash_chat/constants.dart';
@@ -69,7 +70,27 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                       tag: "logo",
                       child: Container(
                         height: 200.0,
-                        child: Image.asset('images/logo.png'),
+                        child: Stack(
+                          alignment: Alignment.center,
+                          children: [
+                            Image.asset(
+                              'images/logo.png',
+                            ),
+                            Container(
+                              padding: EdgeInsets.only(bottom: 15),
+                              child: TypewriterAnimatedTextKit(
+                                text: ["welcome"],
+                                textStyle: TextStyle(
+                                  fontSize: 25,
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.w900,
+                                ),
+                                speed: const Duration(milliseconds: 300),
+                                textAlign: TextAlign.center,
+                              ),
+                            ),
+                          ],
+                        ),
                       ),
                     ),
                     Column(children: [
